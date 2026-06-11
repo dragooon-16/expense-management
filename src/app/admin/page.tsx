@@ -1,11 +1,37 @@
 // src/app/admin/page.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { db } from "../../lib/firebase";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
-  const [claims, setClaims] = useState<any[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        router.push("/");
+        return;
+      }
+      // Check if user is admin
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists() && userDoc.data().role === "admin") {
+        setIsAdmin(true);
+      } else {
+        router.push("/dashboard"); // Kick them out if not admin
+      }
+      setLoading(false);
+    });
+  }, [router]);
+
+  if (loading) return <p>Verifying access...</p>;
+  if (!isAdmin) return null; // This will trigger the router.push
+
+  
 
   useEffect(() => {
     const fetchAllClaims = async () => {
