@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import LoginPage from "./page"; // Assuming your login component is here
-import "../globals.css"; // Your Tailwind styles
+import LoginPage from "./page"; 
+import "./globals.css"; // Note: Adjusted to "./" if globals.css is directly inside your app directory
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       setLoading(false);
     });
     return () => unsubscribe();
-   Ley;
+  }, []); // <-- This was missing and has been properly closed
 
   if (loading) {
     return (
