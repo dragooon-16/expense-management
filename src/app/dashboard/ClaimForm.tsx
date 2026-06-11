@@ -10,7 +10,12 @@ export default function ClaimForm({ userId }: { userId: string }) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const file = e.target.proof.files[0];
+    const file = e.target.proof.files?.[0];
+    if (!file) {
+      alert("Please select a file first.");
+      setLoading(false);
+      return;
+    }
 
     // 1. Upload proof to Firebase Storage
     const storageRef = ref(storage, `proofs/${Date.now()}_${file.name}`);
