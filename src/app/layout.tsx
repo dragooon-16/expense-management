@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import LoginPage from "./page"; 
-import "../globals.css"; // Note: Adjusted to "./" if globals.css is directly inside your app directory
+import "./globals.css"; // Note: Adjusted to "./" if globals.css is directly inside your app directory
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
