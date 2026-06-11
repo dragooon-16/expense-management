@@ -1,5 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // <-- Add this
+import { getStorage } from "firebase/storage";   // <-- Add this
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,9 +12,10 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Check if Firebase apps are already initialized; if not, initialize a new one.
-// This prevents Next.js from crashing during the background build phase.
+// Initialize Firebase safely for Next.js SSR
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);       // <-- Add this
+const storage = getStorage(app);   // <-- Add this
 
-export { app, auth };
+export { app, auth, db, storage }; // <-- Export them here
