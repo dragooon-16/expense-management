@@ -5,12 +5,12 @@ import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCOs9bfpKoFLa9QUCHB3itqY8lCJKCsRMs",
+  authDomain: "travelexp-eeddb.firebaseapp.com",
+  projectId: "travelexp-eeddb",
+  storageBucket: "travelexp-eeddb.firebasestorage.app",
+  messagingSenderId: "958565272542",
+  appId: "1:958565272542:web:46e4457925f8b35adc2b4f"
 };
 
 const app = initializeApp(firebaseConfig);
