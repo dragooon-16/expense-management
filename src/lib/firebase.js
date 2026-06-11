@@ -15,7 +15,7 @@ const firebaseConfig = {
 // Initialize Firebase safely for Next.js SSR
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);       // <-- Add this
-const storage = getStorage(app);   // <-- Add this
+const db = getFirestore(app);       // Ensure this line is present
+const storage = getStorage(app);   // Ensure this line is present
 
-export { app, auth, db, storage }; // <-- Export them here
+export { app, auth, db, storage }; // Ensure all 4 are exported
