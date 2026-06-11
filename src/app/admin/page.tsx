@@ -1,3 +1,4 @@
+// src/app/admin/page.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { db } from "../../lib/firebase";
@@ -9,7 +10,8 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchAllClaims = async () => {
       const querySnapshot = await getDocs(collection(db, "claims"));
-      setClaims(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setClaims(data);
     };
     fetchAllClaims();
   }, []);
@@ -21,29 +23,25 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-10">
-      <h1 className="text-2xl font-bold mb-6">Admin Panel - Manage Claims</h1>
-      <table className="w-full border">
+      <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
+      <table className="w-full border-collapse border">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border">User</th>
-            <th className="p-2 border">Type</th>
-            <th className="p-2 border">Amount</th>
-            <th className="p-2 border">Proof</th>
-            <th className="p-2 border">Status</th>
-            <th className="p-2 border">Action</th>
+          <tr className="bg-gray-100">
+            <th className="border p-2">User ID</th>
+            <th className="border p-2">Amount</th>
+            <th className="border p-2">Status</th>
+            <th className="border p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {claims.map((claim) => (
             <tr key={claim.id}>
-              <td className="p-2 border">{claim.userId}</td>
-              <td className="p-2 border">{claim.type}</td>
-              <td className="p-2 border">{claim.amount}</td>
-              <td className="p-2 border"><a href={claim.proofUrl} target="_blank" className="text-blue-500">View</a></td>
-              <td className="p-2 border">{claim.status}</td>
-              <td className="p-2 border">
-                <button onClick={() => updateStatus(claim.id, "approved")} className="bg-green-500 text-white p-1 mr-2">Approve</button>
-                <button onClick={() => updateStatus(claim.id, "disbursed")} className="bg-blue-500 text-white p-1">Disburse</button>
+              <td className="border p-2">{claim.userId}</td>
+              <td className="border p-2">{claim.amount} {claim.currency}</td>
+              <td className="border p-2 font-bold">{claim.status}</td>
+              <td className="border p-2">
+                <button onClick={() => updateStatus(claim.id, "approved")} className="bg-green-500 text-white px-2 py-1 mr-2 rounded">Approve</button>
+                <button onClick={() => updateStatus(claim.id, "disbursed")} className="bg-blue-500 text-white px-2 py-1 rounded">Disburse</button>
               </td>
             </tr>
           ))}
